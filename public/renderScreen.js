@@ -9,7 +9,7 @@ export default function renderScreen(screen, game, requestAnimationFrame, curren
         const player = game.state.players[playerId]
         if(player === localPlayer){
             //context.fillStyle = '#F0DB4F'
-            //context.fillRect(localPlayer.x, localPlayer.y, 1, 1)
+            //context.fillRect(localPlayer.x, localPlayer.y, 60, 60)
 
             var image = document.getElementById("plyer_1");
             context.drawImage(image ,localPlayer.x * 60, localPlayer.y * 60, 60, 60)

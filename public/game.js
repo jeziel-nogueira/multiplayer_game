@@ -4,8 +4,8 @@ export default function createGame(){
         rank:{},
         fruits:{},
         screen:{
-            width: 600,
-            height: 600
+            width: 10,
+            height: 10
         }
     }
 
@@ -58,10 +58,8 @@ export default function createGame(){
         const playerId = command.playerId
         const playerName = state.players[playerId].playerName
 
-        console.log(playerName)
         delete state.players[playerId]
         delete state.rank[playerName]
-        console.log(state)
         notifyAll({
             type: 'removePlayer',
             playerId: playerId
@@ -76,8 +74,8 @@ export default function createGame(){
 
     function addFruit(command){
         const fruitId = command ? command.fruitId: Math.floor(Math.random() * 10000000)
-        const fruitX = command ? command.fruitX: Math.floor(Math.random() * 10)
-        const fruitY = command ? command.fruitY: Math.floor(Math.random() * 10)
+        const fruitX = command ? command.fruitX: Math.floor(Math.random() * state.screen.width)
+        const fruitY = command ? command.fruitY: Math.floor(Math.random() * state.screen.height)
 
         state.fruits[fruitId] = {
             x: fruitX,

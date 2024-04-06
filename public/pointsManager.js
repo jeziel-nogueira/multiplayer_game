@@ -1,48 +1,59 @@
-export default function pointsController(document){
+export default function pointsController(document) {
     const state = {
         observers: [],
         playerId: null
     }
 
-    function registerPlayerId(playerId){
+    function registerPlayerId(playerId) {
         state.playerId = playerId
     }
-    function subscribe(observerFunction){
+    function subscribe(observerFunction) {
         state.observers.push(observerFunction)
     }
-    
-    function sortRank(rank){
-        let sorted = false
-        //while(!sorted){
 
-            for (var playerA in rank) {
-                
-                for (var playerB in rank) {
-                    if(rank[playerA].points < rank[playerB].points){
+    function sortRank(rank) {
+        // Extrair os pares chave-valor do objeto para um array de objetos
+        const rankArray = Object.entries(rank).map(([key, value]) => ({ key, value }));
 
-                        let temp = rank[playerA]
+        // Implementar o Bubble Sort para ordenar o array de objetos com base nos pontos
+        const len = rankArray.length;
+        let swapped;
 
-                        rank[playerA] = rank[playerB]
-                        rank[playerA].points = rank[playerB].points
-                        rank[playerB] = temp
-                    }
+        do {
+            swapped = false;
+            for (let i = 0; i < len - 1; i++) {
+                if (rankArray[i].value.points < rankArray[i + 1].value.points) {
+                    // Troca os elementos
+                    let temp = rankArray[i];
+                    rankArray[i] = rankArray[i + 1];
+                    rankArray[i + 1] = temp;
+                    swapped = true;
                 }
             }
-       // }
-        return rank
-        
+        } while (swapped);
+
+        // Reconstruir o objeto ordenado
+        const sortedRank = {};
+        for (const { key, value } of rankArray) {
+            sortedRank[key] = value;
+        }
+
+        return sortedRank;
     }
-    
-    function updatePoints(command){
+
+    function updatePoints(command) {
 
         let rank_list = document.getElementById('rank_list')
         rank_list.innerHTML = "";
 
         let lista = command.rank
-        //lista = sortRank(lista)
+        lista = sortRank(lista)
         //const newLista = sortRank(lista)
-        console.log("Len: ", lista.length)
-        
+        //console.log(Object.keys(lista).length);
+
+
+
+
 
         //lista = sortRank(lista)
 
@@ -53,6 +64,6 @@ export default function pointsController(document){
             rank_list.appendChild(li)
         }
     }
-    
-    return{ subscribe, registerPlayerId, updatePoints}
+
+    return { subscribe, registerPlayerId, updatePoints }
 }

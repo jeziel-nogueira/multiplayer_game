@@ -5,6 +5,14 @@ export default function renderScreen(screen, game, requestAnimationFrame, curren
     context.fillStyle = 'white'
     context.clearRect(0, 0, 600, 600)
 
+    for(const fruitId in game.state.fruits){
+        const fruit = game.state.fruits[fruitId]
+        //context.fillStyle = 'green'
+        //context.fillRect(fruit.x, fruit.y, 1, 1)
+
+        var image = document.getElementById("fruit");
+        context.drawImage(image ,fruit.x * 60, fruit.y * 60, 60, 60)
+    }
     for (const playerId in game.state.players){
         const player = game.state.players[playerId]
         if(player === localPlayer){
@@ -20,15 +28,7 @@ export default function renderScreen(screen, game, requestAnimationFrame, curren
             var image = document.getElementById("player_2");
             context.drawImage(image ,player.x * 60, player.y * 60, 60, 60)
         }
-    }
-    for(const fruitId in game.state.fruits){
-        const fruit = game.state.fruits[fruitId]
-        //context.fillStyle = 'green'
-        //context.fillRect(fruit.x, fruit.y, 1, 1)
-
-        var image = document.getElementById("fruit");
-        context.drawImage(image ,fruit.x * 60, fruit.y * 60, 60, 60)
-    }
+    }    
     requestAnimationFrame(() =>{
         renderScreen(screen, game, requestAnimationFrame, currenPlayerId)
     })

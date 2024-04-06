@@ -44,23 +44,26 @@ export default function pointsController(document) {
     function updatePoints(command) {
 
         let rank_list = document.getElementById('rank_list')
-        rank_list.innerHTML = "";
-
         let lista = command.rank
         lista = sortRank(lista)
-        //const newLista = sortRank(lista)
-        //console.log(Object.keys(lista).length);
 
-
-
-
-
-        //lista = sortRank(lista)
-
+        rank_list.innerHTML = "";
+        let rank = 1
         for (var prop in lista) {
-
             let li = document.createElement('li')
             li.textContent = prop + ": " + lista[prop].points
+            if(rank === 1){
+                li.classList.add("f_place");
+                rank++
+            }
+            if(rank === 2){
+                li.classList.add("s_place");
+                rank++
+            }
+            if(rank === 3){
+                li.classList.add("t_place");
+                rank++
+            }
             rank_list.appendChild(li)
         }
     }

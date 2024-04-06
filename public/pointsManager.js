@@ -41,30 +41,57 @@ export default function pointsController(document) {
         return sortedRank;
     }
 
-    function updatePoints(command) {
+    function updatePoints(command, playerName) {
+        console.log(command)
 
         let rank_list = document.getElementById('rank_list')
+        let localPlayer = document.getElementById('localPlayer')
+
         let lista = command.rank
         lista = sortRank(lista)
 
-        rank_list.innerHTML = "";
+        rank_list.innerHTML = ""
+        localPlayer.innerHTML = ""
+        localPlayer.classList.remove("f_place")
+        localPlayer.classList.remove("s_place")
+        localPlayer.classList.remove("t_place")
+        localPlayer.classList.remove("n_place")
+        //localPlayer.classList.add("element")
         let rank = 1
         for (var prop in lista) {
             let li = document.createElement('li')
             li.textContent = prop + ": " + lista[prop].points
             if(rank === 1){
-                li.classList.add("f_place");
-                rank++
+                li.classList.add("f_place")
+                if(prop === playerName){
+                    localPlayer.classList.add("f_place")
+                }
+            }else if(rank === 2){
+                li.classList.add("s_place")
+                if(prop === playerName){
+                    localPlayer.classList.add("s_place")
+                }
+            }else if(rank === 3){
+                li.classList.add("t_place")
+                if(prop === playerName){
+                    localPlayer.classList.add("t_place")
+                }
+            }else{
+                li.classList.add("n_place")
+                if(prop === playerName){
+                    localPlayer.classList.add("n_place")
+                }
             }
-            if(rank === 2){
-                li.classList.add("s_place");
-                rank++
-            }
-            if(rank === 3){
-                li.classList.add("t_place");
-                rank++
+
+
+            if(prop === playerName){
+                let p = document.createElement('p')
+                p.textContent = playerName + ": " + lista[prop].points
+                localPlayer.appendChild(p)
+                console.log("Name: ", prop)
             }
             rank_list.appendChild(li)
+            rank++
         }
     }
 

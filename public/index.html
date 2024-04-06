@@ -50,8 +50,22 @@
             height: 600px;
         }
 
+        #localPlayer{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 60%;
+            height: 30px;
+            margin: 10px;
+            border-radius: 5px; 
+            box-shadow: 
+                12px 12px 16px 0 rgba(255, 255, 255, 0.3) inset,
+                -8px -8px 12px 0 rgba(0, 0, 0, .25) inset;         
+        }
+
         #rank_mask {
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
             width: 300px;
@@ -61,25 +75,60 @@
 
         #rank {
             width: 270px;
-            height: 570px;
+            height: 500px;
             overflow-y: auto;
             overflow-x: hidden;
         }
 
         #rank_list{
             display: flex;
+            position: relative;
+            left: 50%;
+            transform: translate(-50%, 0);
             flex-direction: column;
             justify-content: center;
             align-items: center;
             list-style: none;
+            width: 40%;
         }
 
         #rank_list li{
+            width: 90%;
             margin-top: 5px;
+            padding: 5px;
+            border-radius: 5px;
         }
 
         .f_place{
-            background-color: #CCC;
+            /* border: 5px solid #dbd826; */
+            background-color: #dbd826;
+            box-shadow: 
+                12px 12px 16px 0 rgba(255, 255, 255, 0.3) inset,
+                -8px -8px 12px 0 rgba(0, 0, 0, .25) inset;
+        }
+
+
+        .s_place{
+            /* border: 5px solid #dbd826; */
+            background-color: #c0c0c0;
+            box-shadow: 
+                12px 12px 16px 0 rgba(255, 255, 255, 0.3) inset,
+                -8px -8px 12px 0 rgba(0, 0, 0, .25) inset;
+        }
+
+
+        .t_place{
+            /* border: 5px solid #dbd826; */
+            background-color: #cd7f32 ;
+            box-shadow: 
+                12px 12px 16px 0 rgba(255, 255, 255, 0.3) inset,
+                -8px -8px 12px 0 rgba(0, 0, 0, .25) inset;
+        }
+        .n_place{
+            background-color: #afd275 ;
+            box-shadow: 
+                12px 12px 16px 0 rgba(255, 255, 255, 0.3) inset,
+                -8px -8px 12px 0 rgba(0, 0, 0, .25) inset;
         }
 
         #chat_div {
@@ -147,9 +196,13 @@
         }
 
         #form button{
+            display: flex;
+            align-items: center;
+            justify-content: center;
             border: 3px solid #CCC;
-            width: 50px;
-            height: 30px;
+            width: 55px;
+            height: 35px;
+            cursor: pointer;
         }
     </style>
     <script src="/socket.io/socket.io.js"></script>
@@ -163,7 +216,9 @@
                 <img id="player_2" src="./img/player_2.webp" alt="" srcset="">
                 <img id="fruit" src="./img/fruit.jpg" alt="" srcset="">
             </canvas>
+            
             <div id="rank_mask" class="element">
+                <div id="localPlayer">Local player</div>
                 <div id="rank" class="element">
                     <ul id="rank_list">
                         
@@ -197,11 +252,6 @@
         import sendMessage from './chat.js'
         import poitnsManager from './pointsManager.js'
 
-        const playerName = ""
-
-        /* while (playerName === ""){
-            
-        } */
         const game = createGame()
         const keyboardListener = createKeyboardListener(document)
         const sendMsg = sendMessage(document)
@@ -211,7 +261,6 @@
 
         const socket = io()
         socket.on('connect', () => {
-
 
             const playerId = socket.id
             const screen = document.getElementById('screen')
@@ -224,7 +273,10 @@
             const command = {
                 rank: state.rank
             }
-            updatePoints.updatePoints(command)
+
+            const id = socket.id
+            const playerName = game.state.players[id].playerName
+            updatePoints.updatePoints(command, playerName)
             //poitnsManager.updatePoints(state.rank)
             
 
@@ -277,7 +329,9 @@
             sendMsg.receiveMessege(command)
         })
         socket.on('updatePoints', (command) => {
-            updatePoints.updatePoints(command)
+            const id = socket.id
+            const playerName = game.state.players[id].playerName
+            updatePoints.updatePoints(command, playerName)
         })
 
 

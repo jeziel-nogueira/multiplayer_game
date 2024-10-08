@@ -6,7 +6,7 @@
 ![HTML5](https://img.shields.io/badge/html5-%23E34F26.svg?style=for-the-badge&logo=html5&logoColor=white)
 ![JavaScript](https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E)
 
-Jogo multiplayer simples desenvolvido para estudo do framework Node.Js durante a terceira fase do curso de Engenharia de Software.
+Jogo multiplayer desenvolvido para estudo pratico com framework Node.Js e arquitetura orientada a eventos durante a terceira fase do curso de Engenharia de Software.
 
 ## Estrutura do servidor:
 ![mmo_server_structure](https://github.com/user-attachments/assets/4cb7e52c-f147-4ede-888c-73953e6f4833)
